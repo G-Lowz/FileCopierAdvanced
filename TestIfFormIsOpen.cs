@@ -7,13 +7,9 @@ namespace FileCopierAdvanced
 {
     class TestIfFormIsOpen
     {
-        private const int MaxNumberOfForms = 4;
-        /*
-        private int MaxNumberOfForms 
-        { 
-            get { return MaxNumberOfForms; }
-            set { MaxNumberOfForms = value; } 
-        } */
+        //private const int MaxNumberOfForms = 4;
+
+        private int MaxNumberOfForms; 
         private int iInputFormNum  
         { 
             set { iInputFormNum = value; }
@@ -23,9 +19,9 @@ namespace FileCopierAdvanced
             get { return bInputFormNumOK; }
         }
         private bool[] aFormNumbers;
-        public TestIfFormIsOpen()  // initialisation
+        public TestIfFormIsOpen(int _max)  // initialisation
         {
-            //MaxNumberOfForms = _max;
+            MaxNumberOfForms = _max;
             aFormNumbers = new bool[MaxNumberOfForms];
             for (int i = 0; i < MaxNumberOfForms; i++)
             {

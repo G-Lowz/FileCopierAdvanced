@@ -13,17 +13,15 @@ namespace FileCopierAdvanced
 {
     public partial class File_Copier : Form
     {
-        private const int MAXNUMBEROFFORM = 4;
+        private const int MAXNUMBEROFFORM = 5;
         Form2[] _form = new Form2[MAXNUMBEROFFORM];
-        private bool[] _bFormsOpen = new bool[MAXNUMBEROFFORM];
-        //private int _iTempFormsOpened;
-        //private int iFormNumberOpen = 0;
-        TestIfFormIsOpen _FormNumTest = new TestIfFormIsOpen();
+        TestIfFormIsOpen _FormNumTest;
         private int _i;
         public File_Copier()
         {
             InitializeComponent();
-            OpenLabel.Text = $"Number of Copiers Open: 0";
+            _FormNumTest = new TestIfFormIsOpen(MAXNUMBEROFFORM);
+            OpenLabel.Text = $"Number of File Copier Open: {_FormNumTest.RequestForFormOpened()}";
             MonitoringForm();
             MaxLabel.Visible = false;
         }
