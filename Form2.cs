@@ -38,7 +38,7 @@ namespace FileCopierAdvanced
         {
             if (_formClosing != null)
             {
-                _formClosing?.Invoke(true, EventArgs.Empty);
+                _formClosing?.Invoke(this.Name, EventArgs.Empty);
             }
             else
             {

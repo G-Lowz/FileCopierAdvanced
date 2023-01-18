@@ -13,41 +13,70 @@ namespace FileCopierAdvanced
 {
     public partial class File_Copier : Form
     {
-        private const int MAXNUMBEROFFORM = 10;
-        Form2 _form = new Form2();
-        private int FormNumberOpen = 0;
+        private const int MAXNUMBEROFFORM = 4;
+        Form2[] _form = new Form2[MAXNUMBEROFFORM];
+        private bool[] _bFormsOpen = new bool[MAXNUMBEROFFORM];
+        //private int _iTempFormsOpened;
+        //private int iFormNumberOpen = 0;
+        TestIfFormIsOpen _FormNumTest = new TestIfFormIsOpen();
+        private int _i;
         public File_Copier()
         {
             InitializeComponent();
             OpenLabel.Text = $"Number of Copiers Open: 0";
             MonitoringForm();
+            MaxLabel.Visible = false;
         }
         private void MonitoringForm()
         {
-            _form._formClosing += _forms_FormClosing;
+            int _r = _FormNumTest.RequestForFormOpened();
+            if ( _r > 0)
+            {
+                for (_i = 0; _i < _r; _i++)
+                {
+                    _form[_i]._formClosing += _forms_FormClosing; // how to send the number to the event handeler?
+                }
+            } 
         }
-        private void _forms_FormClosing(object sender, EventArgs e)
+        private void _forms_FormClosing(object sender, EventArgs e)  /// SUBSCRIPTION ISSUE
         {
-            button1.Enabled = true;
-            FormNumberOpen -= 1;
-            OpenLabel.Text = $"Number of File Copier Open: {FormNumberOpen}";
+            // *** request to close form 
+            int _t = int.Parse(sender.ToString());
+            if (!button1.Enabled) 
+            { 
+                button1.Enabled = true;
+                MaxLabel.Visible = false;
+            }
+            _FormNumTest.RequestToCloseForm(_t);
+            OpenLabel.Text = $"Number of File Copier Open: {_FormNumTest.RequestForFormOpened()}";
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            FormNumberOpen += 1;
-            _form.Text = $"File Copier {FormNumberOpen}";
-            if (_form.IsDisposed)
+            // Test if this is open.
+            int _formNum = _FormNumTest.RequestingFormNum();
+
+            // Open the form if not opened or 
+            _form[_formNum] = new Form2();
+            _form[_formNum].Text = $"File Copier {_formNum+1}";
+            _form[_formNum].Name = _formNum.ToString();
+            if (_form[_formNum].IsDisposed)
             {
-                _form = new Form2();
-                _form.Show();
-                MonitoringForm();
+                _form[_formNum] = new Form2();
+                _form[_formNum].Show();
             }
             else
             {
-                _form.Show();
+                _form[_formNum].Show();
             }
-            OpenLabel.Text = $"Number of File Copier Open: {FormNumberOpen}";
-            button1.Enabled = false;
+            MonitoringForm();
+
+            OpenLabel.Text = $"Number of File Copier Open: {_FormNumTest.RequestForFormOpened()}";
+            if (_FormNumTest.RequestForFormOpened() >= MAXNUMBEROFFORM)
+            {
+                button1.Enabled = false;
+                MaxLabel.Visible = true;
+            }
+            
         }
 
         // For has reached the max the button will be disabled.

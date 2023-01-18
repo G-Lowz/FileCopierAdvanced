@@ -31,6 +31,7 @@ namespace FileCopierAdvanced
         {
             this.button1 = new System.Windows.Forms.Button();
             this.OpenLabel = new System.Windows.Forms.Label();
+            this.MaxLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -52,11 +53,22 @@ namespace FileCopierAdvanced
             this.OpenLabel.TabIndex = 1;
             this.OpenLabel.Text = "Number of Copiers Open: ";
             // 
+            // MaxLabel
+            // 
+            this.MaxLabel.AutoSize = true;
+            this.MaxLabel.ForeColor = System.Drawing.Color.Red;
+            this.MaxLabel.Location = new System.Drawing.Point(38, 17);
+            this.MaxLabel.Name = "MaxLabel";
+            this.MaxLabel.Size = new System.Drawing.Size(211, 15);
+            this.MaxLabel.TabIndex = 2;
+            this.MaxLabel.Text = "Maximum Number of Copiers Opened";
+            // 
             // File_Copier
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(286, 113);
+            this.Controls.Add(this.MaxLabel);
             this.Controls.Add(this.OpenLabel);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -75,6 +87,7 @@ namespace FileCopierAdvanced
 
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label OpenLabel;
+        private System.Windows.Forms.Label MaxLabel;
     }
 }
 
